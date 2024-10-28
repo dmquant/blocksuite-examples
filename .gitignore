@@ -35,3 +35,4 @@ __screenshots__/
 
 .nx/cache
 .nx/workspace-data
+.vercel
