@@ -24,9 +24,43 @@ const Sidebar = () => {
     return () => disposable.forEach(d => d.dispose());
   }, [collection, editor]);
 
+  const createNewDoc = () => {
+    if (!collection) return;
+    const newDoc = collection.createDoc();
+    if (editor) editor.doc = newDoc;
+    const docs = [...collection.docs.values()].map(blocks => blocks.getDoc());
+    setDocs(docs);
+  };
+
+  const removeDoc = (docToRemove: Doc, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the parent div's onClick
+    if (!collection) return;
+    
+    collection.removeDoc(docToRemove.id);
+    
+    // If the removed doc was active, switch to another doc
+    if (editor?.doc === docToRemove) {
+      const remainingDocs = [...collection.docs.values()];
+      if (remainingDocs.length > 0) {
+        editor.doc = remainingDocs[0].getDoc();
+      }
+    }
+    
+    const updatedDocs = [...collection.docs.values()].map(blocks => blocks.getDoc());
+    setDocs(updatedDocs);
+  };
+
   return (
     <div className="sidebar">
-      <div className="header">All Docs</div>
+      <div className="header">
+        All Docs
+        <button 
+          className="new-doc-button" 
+          onClick={createNewDoc}
+        >
+          New Page
+        </button>
+      </div>
       <div className="doc-list">
         {docs.map(doc => (
           <div
@@ -40,7 +74,15 @@ const Sidebar = () => {
               setDocs(docs);
             }}
           >
-            {doc.meta?.title || 'Untitled'}
+            <div className="doc-item-content">
+              <span>{doc.meta?.title || 'Untitled'}</span>
+              <button 
+                className="remove-doc-button"
+                onClick={(e) => removeDoc(doc, e)}
+              >
+                ×
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -22,19 +22,31 @@ export function initEditor() {
   const collection = new DocCollection({ schema });
   collection.meta.initialize();
 
+  const createInitialPage = (doc: Doc) => {
+    doc.load(() => {
+      const pageBlockId = doc.addBlock('affine:page', {});
+      doc.addBlock('affine:surface', {}, pageBlockId);
+      const noteId = doc.addBlock('affine:note', {}, pageBlockId);
+      doc.addBlock('affine:paragraph', {}, noteId);
+    });
+  };
+
   const doc = collection.createDoc({ id: 'page1' });
-  doc.load(() => {
-    const pageBlockId = doc.addBlock('affine:page', {});
-    doc.addBlock('affine:surface', {}, pageBlockId);
-    const noteId = doc.addBlock('affine:note', {}, pageBlockId);
-    doc.addBlock('affine:paragraph', {}, noteId);
-  });
+  createInitialPage(doc);
 
   const editor = new AffineEditorContainer();
   editor.doc = doc;
+
+  collection.createDoc = function(options = {}) {
+    const newDoc = DocCollection.prototype.createDoc.call(this, options);
+    createInitialPage(newDoc);
+    return newDoc;
+  };
+
   editor.slots.docLinkClicked.on(({ docId }) => {
     const target = <Doc>collection.getDoc(docId);
     editor.doc = target;
   });
+
   return { editor, collection };
 }

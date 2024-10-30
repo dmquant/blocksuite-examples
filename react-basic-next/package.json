@@ -12,6 +12,7 @@
     "@blocksuite/blocks": "0.15.0-canary-202406291027-8aed732",
     "@blocksuite/presets": "0.15.0-canary-202406291027-8aed732",
     "@blocksuite/store": "0.15.0-canary-202406291027-8aed732",
+    "lit": "^3.2.0",
     "next": "14.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
