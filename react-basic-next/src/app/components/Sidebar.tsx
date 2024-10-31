@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Doc } from '@blocksuite/store';
 import { useEditor } from '../editor/context';
+import ChatBot from './ChatBot';
 
 const Sidebar = () => {
   const { collection, editor } = useEditor()!;
@@ -85,6 +86,10 @@ const Sidebar = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="chat-section">
+        <h3>AI Assistant</h3>
+        <ChatBot />
       </div>
     </div>
   );

@@ -124,3 +124,76 @@
 .doc-item:hover .remove-doc-button {
   visibility: visible;
 }
+
+.chat-section {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.chatbot {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.message {
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 85%;
+  word-wrap: break-word;
+}
+
+.message.user {
+  background-color: #e3f2fd;
+  align-self: flex-end;
+}
+
+.message.assistant {
+  background-color: #f5f5f5;
+  align-self: flex-start;
+}
+
+.chat-input-form {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.chat-submit {
+  padding: 8px 16px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-submit:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.loading {
+  align-self: center;
+  color: #666;
+  font-style: italic;
+}
